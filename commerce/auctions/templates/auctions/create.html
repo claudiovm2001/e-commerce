@@ -5,4 +5,11 @@
 {% endblock %}
 
 {% block body %}
+    <h3>Creating a listing:</h3>
+    <form action="{% url 'create' %}" method="post">
+        {% csrf_token %}
+        {{form}}
+        <input type="submit">
+    </form>
+    
 {% endblock %}

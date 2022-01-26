@@ -6,10 +6,13 @@ class User(AbstractUser):
     pass
 
 class Listing(models.Model):
-    pass
+    title = models.CharField(max_length=64)
+    desc = models.CharField(max_length=64)
+    st_bid = models.IntegerField()
+    img = models.CharField(max_length=64)
 
     def __str__(self):
-        pass
+        return f"{self.title}, {self.desc}, {self.st_bid}, {self.img}"
 
 class Bid(models.Model):
     pass
