@@ -1,0 +1,26 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    Auction
+{% endblock %}
+
+{% block body %}
+    {{listing.title}} <br>
+    {{listing.desc}}
+
+    <br><br>
+    <a href="">➕Watchlist</a> <br><br>
+
+    Bid: 
+    <form action="">
+        <input type="text" placeholder="value">
+        <input type="submit">
+    </form>
+    <br>
+
+    Comment:
+    <form action="">
+        <input type="text" placeholder="Write something...">
+        <input type="submit">
+    </form>
+{% endblock %}
