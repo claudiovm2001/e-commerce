@@ -14,7 +14,9 @@ class NewListingForm(forms.Form):
     img = forms.CharField(label="Imagem")
 
 def index(request):
-    return render(request, "auctions/index.html")
+    return render(request, "auctions/index.html", {
+        "auctions": Listing.objects.filter(closed=False)
+    })
 
 
 def login_view(request):
@@ -77,7 +79,8 @@ def create_listing(request):
                 title = form.cleaned_data["title"],
                 desc = form.cleaned_data["desc"],
                 st_bid = form.cleaned_data["st_bid"],
-                img = form.cleaned_data["img"])
+                img = form.cleaned_data["img"]),
+                #closed = False
             l.save()
         
 
@@ -86,12 +89,21 @@ def create_listing(request):
         "form": form
     })
 
+'''
 def listings(request):
     return render(request, "auctions/listings.html", {
         "listings": Listing.objects.all()
     })
+'''
 
 def auction(request, auction_id):
     return render(request, "auctions/auction.html", {
-        "listing": Listing.objects.get(id=auction_id)
+        "auction": Listing.objects.get(id=auction_id)
     })
+
+def close(request, auction_id):
+    auction = Listing.objects.get(id=auction_id)
+    auction.closed = True
+    auction.save()
+
+    return HttpResponseRedirect(reverse("index"))

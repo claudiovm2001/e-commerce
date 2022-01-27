@@ -10,9 +10,10 @@ class Listing(models.Model):
     desc = models.CharField(max_length=64)
     st_bid = models.IntegerField()
     img = models.CharField(max_length=64)
+    closed = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.title}, {self.desc}, {self.st_bid}, {self.img}"
+        return f"{self.id}, {self.title}"
 
 class Bid(models.Model):
     pass

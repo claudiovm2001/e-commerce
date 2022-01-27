@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block body %}
-    {{listing.title}} <br>
-    {{listing.desc}}
+    {{auction.title}} <br>
+    {{auction.desc}}
 
     <br><br>
     <a href="">➕Watchlist</a> <br><br>
@@ -23,4 +23,7 @@
         <input type="text" placeholder="Write something...">
         <input type="submit">
     </form>
+
+    Closed? {{auction.closed}}
+    <a href="{% url 'close' auction.id %}">Close</a>
 {% endblock %}
