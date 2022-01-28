@@ -26,3 +26,9 @@ class Comment(models.Model):
 
     def __str__(self):
         pass
+
+class Watchlist(models.Model):
+    listing_id = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.listing_id}"

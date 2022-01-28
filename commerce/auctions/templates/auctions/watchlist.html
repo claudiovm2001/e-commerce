@@ -5,5 +5,15 @@
 {% endblock %}
 
 {% block body %}
+    <h2>In your watchlist:</h2>
 
+    <br>
+    {% for item in watchlist %}
+        <ul>
+            <li>
+                <a href="{% url 'auction' item.id %}">{{item.title}}</a> <br>
+                {{item.desc}}
+            </li>
+        </ul>
+    {% endfor %}
 {% endblock %}

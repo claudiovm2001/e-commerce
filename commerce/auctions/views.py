@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Listing
+from .models import User, Listing, Watchlist
 from django import forms
 
 class NewListingForm(forms.Form):
@@ -106,4 +106,18 @@ def close(request, auction_id):
     auction.closed = True
     auction.save()
 
+    return HttpResponseRedirect(reverse("index"))
+
+def watchlist(request):
+    keys = Watchlist.objects.all().values_list('listing_id', flat=True)
+
+    watch = Listing.objects.filter(pk__in=keys)
+
+    return render(request, "auctions/watchlist.html", {
+        "watchlist": watch
+    })
+
+def watchlist_add(request, auction_id):
+    item = Watchlist(listing_id = auction_id)
+    item.save()
     return HttpResponseRedirect(reverse("index"))
