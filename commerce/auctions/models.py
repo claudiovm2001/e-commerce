@@ -32,3 +32,7 @@ class Watchlist(models.Model):
 
     def __str__(self):
         return f"{self.listing_id}"
+
+class Categories(models.Model):
+    title = models.CharField(max_length=64)
+    listing_id = models.IntegerField()

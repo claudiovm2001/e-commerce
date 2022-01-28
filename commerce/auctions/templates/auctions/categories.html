@@ -5,5 +5,7 @@
 {% endblock %}
 
 {% block body %}
-
+    {% for name in names %}
+        <a href="{% url 'category' name %}">{{name}}</a>
+    {% endfor %}
 {% endblock %}

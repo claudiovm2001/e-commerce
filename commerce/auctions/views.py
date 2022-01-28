@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
-from .models import User, Listing, Watchlist
+from .models import *
 from django import forms
 
 class NewListingForm(forms.Form):
@@ -134,3 +134,13 @@ def watchlist_remove(request, auction_id):
     Watchlist.objects.filter(listing_id = auction_id).delete()
 
     return redirect('index')
+
+def categories(request):
+    names = Categories.objects.all().values_list('title', flat=True).distinct()
+
+    return render(request, "auctions/categories.html", {
+        "names" : names
+    })
+
+def category(request):
+    pass
