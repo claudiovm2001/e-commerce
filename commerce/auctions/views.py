@@ -142,5 +142,20 @@ def categories(request):
         "names" : names
     })
 
-def category(request):
-    pass
+def category(request, name):
+    '''
+    data = Categories.objects.filter(title = name)
+    keys = data.objects.all().values_list('listing_id', flat=True)
+    content = Listings.objects.filter(pk__in=keys)
+
+    return render(request, "auctions/category.html", {
+        "content": content, "title": name
+    })
+    '''
+
+    keys = Categories.objects.all().filter(title = name).values_list('listing_id', flat=True)
+    content = Listing.objects.filter(pk__in=keys)
+
+    return render(request, "auctions/category.html", {
+        "content": content, "title": name
+    })
