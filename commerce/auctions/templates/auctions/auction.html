@@ -9,8 +9,12 @@
     {{auction.desc}}
 
     <br><br>
-    <a href="{% url 'watchlist_add' auction.id %}">➕Watchlist</a> <br><br>
-
+    {% if exists %}
+        <a href="{% url 'watchlist_remove' auction.id %}">➖Watchlist</a> <br> <br>
+    {% else %}
+        <a href="{% url 'watchlist_add' auction.id %}">➕Watchlist</a> <br> <br>
+    {% endif %}
+    
     Bid: 
     <form action="">
         <input type="text" placeholder="value">

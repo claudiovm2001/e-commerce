@@ -97,8 +97,11 @@ def listings(request):
 '''
 
 def auction(request, auction_id):
+    in_list = Watchlist.objects.filter(listing_id = auction_id).exists
+
     return render(request, "auctions/auction.html", {
-        "auction": Listing.objects.get(id=auction_id)
+        "auction": Listing.objects.get(id=auction_id),
+        "exists": in_list
     })
 
 def close(request, auction_id):
@@ -125,4 +128,9 @@ def watchlist_add(request, auction_id):
 
     item = Watchlist(listing_id = auction_id)
     item.save()
+    return redirect('index')
+
+def watchlist_remove(request, auction_id):
+    Watchlist.objects.filter(listing_id = auction_id).delete()
+
     return redirect('index')
