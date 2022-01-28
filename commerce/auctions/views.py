@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .models import User, Listing, Watchlist
@@ -118,6 +118,11 @@ def watchlist(request):
     })
 
 def watchlist_add(request, auction_id):
+    is_duplicate = Watchlist.objects.filter(listing_id = auction_id).exists()
+
+    if is_duplicate == True:
+        return redirect('index')    
+
     item = Watchlist(listing_id = auction_id)
     item.save()
-    return HttpResponseRedirect(reverse("index"))
+    return redirect('index')
