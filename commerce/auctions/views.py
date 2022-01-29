@@ -79,14 +79,21 @@ def create_listing(request):
                 title = form.cleaned_data["title"],
                 desc = form.cleaned_data["desc"],
                 st_bid = form.cleaned_data["st_bid"],
-                img = form.cleaned_data["img"]),
+                img = form.cleaned_data["img"])
                 #closed = False
             l.save()
+
+            select = request.POST['category']
+            if select != 0:
+                category = Categories(title = select, listing_id= l.id)
+                category.save()
         
 
     form = NewListingForm()
+    categories = Categories.objects.all().values_list('title', flat=True).distinct()
+
     return render(request, "auctions/create.html", {
-        "form": form
+        "form": form, "categories": categories
     })
 
 '''
