@@ -22,10 +22,11 @@ class Bid(models.Model):
         pass
 
 class Comment(models.Model):
-    pass
+    listing_id = models.IntegerField()
+    content = models.CharField(max_length=64)
 
     def __str__(self):
-        pass
+        return f"{self.listing_id}, {self.content}"
 
 class Watchlist(models.Model):
     listing_id = models.IntegerField()

@@ -105,10 +105,12 @@ def listings(request):
 
 def auction(request, auction_id):
     in_list = Watchlist.objects.filter(listing_id = auction_id).exists
+    comments = Comment.objects.filter(listing_id = auction_id)
 
     return render(request, "auctions/auction.html", {
         "auction": Listing.objects.get(id=auction_id),
-        "exists": in_list
+        "exists": in_list,
+        "comments": comments
     })
 
 def close(request, auction_id):
@@ -166,3 +168,11 @@ def category(request, name):
     return render(request, "auctions/category.html", {
         "content": content, "title": name
     })
+
+def comment(request, auction_id):
+    if request.method == "POST":
+        data = request.POST["content"]
+        text = Comment(listing_id=auction_id, content=data)
+        text.save()
+
+        return redirect('index')

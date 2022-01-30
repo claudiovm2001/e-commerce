@@ -22,12 +22,21 @@
     </form>
     <br>
 
+    Closed? {{auction.closed}}
+    <a href="{% url 'close' auction.id %}">Close</a>
+
+    <br><br>
     Comment:
-    <form action="">
-        <input type="text" placeholder="Write something...">
+    <form action="{% url 'comment' auction.id %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="content" placeholder="Write something...">
         <input type="submit">
     </form>
 
-    Closed? {{auction.closed}}
-    <a href="{% url 'close' auction.id %}">Close</a>
+    <br><br>
+    <ul>
+    {% for item in comments %}
+        <li>{{item.content}}</li>
+    {% endfor %}
+    </ul>
 {% endblock %}
