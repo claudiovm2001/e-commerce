@@ -15,4 +15,3 @@ https://www.edx.org/
 - Install Django(+python);
 - Execute `python manage.py runserver` via terminal;
 - Visit `localhost:8000` via web browser.
-- 
