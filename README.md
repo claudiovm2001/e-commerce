@@ -7,6 +7,7 @@ https://www.edx.org/
 ||
 
 Um sistema web inspirado no eBay(leilões).
+
 Este projeto deve ser apresentado como um trabalho acadêmico. A ideia original vem da Universidade de Harvard, oferecida pela plataforma edX:
 https://www.edx.org/
 
@@ -14,3 +15,4 @@ https://www.edx.org/
 - Install Django(+python);
 - Execute `python manage.py runserver` via terminal;
 - Visit `localhost:8000` via web browser.
+- 
