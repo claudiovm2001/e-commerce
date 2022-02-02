@@ -15,9 +15,10 @@
         <a href="{% url 'watchlist_add' auction.id %}">➕Watchlist</a> <br> <br>
     {% endif %}
     
-    Bid: 
-    <form action="">
-        <input type="text" placeholder="value">
+    Bid: (current: {{highest}})
+    <form action="{% url 'bid' auction.id %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="value" placeholder="value">
         <input type="submit">
     </form>
     <br>

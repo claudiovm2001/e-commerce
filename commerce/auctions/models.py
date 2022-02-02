@@ -16,10 +16,11 @@ class Listing(models.Model):
         return f"{self.id}, {self.title}"
 
 class Bid(models.Model):
-    pass
+    listing_id = models.IntegerField(default=-1)
+    value = models.IntegerField(default=-1)
 
     def __str__(self):
-        pass
+        return f"{self.listing_id}, {self.value}"
 
 class Comment(models.Model):
     listing_id = models.IntegerField()

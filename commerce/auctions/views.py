@@ -106,11 +106,20 @@ def listings(request):
 def auction(request, auction_id):
     in_list = Watchlist.objects.filter(listing_id = auction_id).exists
     comments = Comment.objects.filter(listing_id = auction_id)
+    start = Listing.objects.get(id=auction_id)
+    highest = start.st_bid
+
+    surpassed = Bid.objects.filter(listing_id = auction_id).exists()
+
+    if surpassed:
+        new = Bid.objects.get(listing_id=auction_id)
+        highest = new.value
 
     return render(request, "auctions/auction.html", {
         "auction": Listing.objects.get(id=auction_id),
         "exists": in_list,
-        "comments": comments
+        "comments": comments,
+        "highest": highest
     })
 
 def close(request, auction_id):
@@ -175,4 +184,24 @@ def comment(request, auction_id):
         text = Comment(listing_id=auction_id, content=data)
         text.save()
 
+        return redirect('index')
+
+def bid(request, auction_id):
+    if request.method == "POST":
+        data = request.POST["value"]
+        old = Listing.objects.get(id=auction_id)
+        highest = old.st_bid
+        
+
+        in_database = Bid.objects.filter(listing_id=auction_id).exists()
+
+        if in_database == True:
+            old = Bid.objects.get(listing_id=auction_id)
+            highest = old.value
+
+            if int(data) > highest :
+                new = Bid(listing_id=auction_id, value=data)
+                old.delete()
+                new.save()       
+        
         return redirect('index')
