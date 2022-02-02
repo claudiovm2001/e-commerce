@@ -5,8 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    {{auction.title}} <br>
-    {{auction.desc}}
+    <strong>{{auction.title}}</strong> <br>
+    {{auction.desc}} <br>
+
+    <img src="{{auction.img}}" alt="Image" width="100px">
 
     <br><br>
     {% if exists %}

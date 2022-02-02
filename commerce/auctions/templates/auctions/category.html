@@ -7,12 +7,13 @@
 {% block body %}
     {% for item in content %}
         <ul>
+            <br>
             <li>
                 <a href="{% url 'auction' item.id %}">{{item.title}}</a> <br>
-                {{item.desc}}
+                <img src="{{item.img}}" alt="Image" width="100px"> <br>
+                {{item.desc}} <br>
             </li>
         </ul>
         
     {% endfor %}
-    <br><br>
 {% endblock %}

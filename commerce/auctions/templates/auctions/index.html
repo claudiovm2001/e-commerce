@@ -5,10 +5,12 @@
 
     {% for auction in auctions %}
         <ul>
+            <br>
             <li>
                 <a href="{% url 'auction' auction.id %}">{{auction.title}} <br></a>
+                <img src="{{auction.img}}" alt="Image" width="100px"><br>
                 ${{auction.st_bid}} <br>
-                {{auction.desc}}
+                {{auction.desc}} <br>
             </li>
         </ul>
     {% endfor %}
