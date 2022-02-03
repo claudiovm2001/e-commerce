@@ -9,7 +9,7 @@ class Listing(models.Model):
     title = models.CharField(max_length=64)
     desc = models.CharField(max_length=64)
     st_bid = models.IntegerField()
-    img = models.CharField(max_length=255)
+    img = models.CharField(max_length=255, default=None)
     closed = models.BooleanField(default=False)
 
     def __str__(self):

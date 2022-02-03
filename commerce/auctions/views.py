@@ -9,9 +9,8 @@ from django import forms
 
 class NewListingForm(forms.Form):
     title = forms.CharField(label="Título")
-    desc = forms.CharField(label="Descrição")
     st_bid = forms.IntegerField(label="Lance inicial")
-    img = forms.CharField(label="Imagem")
+    img = forms.CharField(label="Imagem", required=False)
 
 def index(request):
     return render(request, "auctions/index.html", {
@@ -77,10 +76,9 @@ def create_listing(request):
         if form.is_valid():
             l = Listing(
                 title = form.cleaned_data["title"],
-                desc = form.cleaned_data["desc"],
+                desc = request.POST["desc"],
                 st_bid = form.cleaned_data["st_bid"],
                 img = form.cleaned_data["img"])
-                #closed = False
             l.save()
 
             select = request.POST['category']
