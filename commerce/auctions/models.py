@@ -12,6 +12,7 @@ class Listing(models.Model):
     st_bid = models.IntegerField()
     img = models.CharField(max_length=255, default=None)
     closed = models.BooleanField(default=False)
+    owner = models.IntegerField(default=-1)
 
     def __str__(self):
         return f"{self.id}, {self.title}"

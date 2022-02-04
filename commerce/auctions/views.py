@@ -107,6 +107,8 @@ def auction(request, auction_id):
     start = Listing.objects.get(id=auction_id)
     highest = start.st_bid
 
+    owns = Listing.objects.filter(id=auction_id, owner=request.user.id).exists()
+
     surpassed = Bid.objects.filter(listing_id = auction_id).exists()
 
     if surpassed:
@@ -117,7 +119,8 @@ def auction(request, auction_id):
         "auction": Listing.objects.get(id=auction_id),
         "exists": in_list,
         "comments": comments,
-        "highest": highest
+        "highest": highest,
+        "owns": owns
     })
 
 def close(request, auction_id):
