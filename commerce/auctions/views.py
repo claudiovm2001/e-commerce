@@ -138,12 +138,12 @@ def watchlist(request):
     })
 
 def watchlist_add(request, auction_id):
-    is_duplicate = Watchlist.objects.filter(listing_id = auction_id).exists()
+    is_duplicate = Watchlist.objects.filter(listing_id = auction_id, owner=request.user.id).exists()
 
     if is_duplicate == True:
         return redirect('index')    
 
-    item = Watchlist(listing_id = auction_id)
+    item = Watchlist(listing_id = auction_id, owner=request.user.id)
     item.save()
     return redirect('index')
 
