@@ -102,7 +102,7 @@ def listings(request):
 '''
 
 def auction(request, auction_id):
-    in_list = Watchlist.objects.filter(listing_id = auction_id).exists
+    in_list = Watchlist.objects.filter(listing_id = auction_id, owner=request.user.id).exists
     comments = Comment.objects.filter(listing_id = auction_id)
     start = Listing.objects.get(id=auction_id)
     highest = start.st_bid
@@ -148,7 +148,7 @@ def watchlist_add(request, auction_id):
     return redirect('index')
 
 def watchlist_remove(request, auction_id):
-    Watchlist.objects.filter(listing_id = auction_id).delete()
+    Watchlist.objects.filter(listing_id = auction_id, owner=request.user.id).delete()
 
     return redirect('index')
 
