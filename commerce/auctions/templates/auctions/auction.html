@@ -10,34 +10,36 @@
 
     <img src="{{auction.img}}" alt="Image" width="100px">
 
-    <br><br>
-    {% if exists %}
-        <a href="{% url 'watchlist_remove' auction.id %}">➖Watchlist</a> <br> <br>
-    {% else %}
-        <a href="{% url 'watchlist_add' auction.id %}">➕Watchlist</a> <br> <br>
-    {% endif %}
+    {% if logged %}
+        <br><br>
+        {% if exists %}
+            <a href="{% url 'watchlist_remove' auction.id %}">➖Watchlist</a> <br> <br>
+        {% else %}
+            <a href="{% url 'watchlist_add' auction.id %}">➕Watchlist</a> <br> <br>
+        {% endif %}
     
-    Bid: (current: {{highest}})
-    <form action="{% url 'bid' auction.id %}" method="post">
-        {% csrf_token %}
-        <input type="text" name="value" placeholder="value">
-        <input type="submit">
-    </form>
-    <br>
+        Bid: (current: {{highest}})
+        <form action="{% url 'bid' auction.id %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="value" placeholder="value">
+            <input type="submit">
+        </form>
+        <br>
 
-    {% if owns %}
-        Closed? {{auction.closed}}
-        <a href="{% url 'close' auction.id %}">Close</a>
+        {% if owns %}
+            Closed? {{auction.closed}}
+            <a href="{% url 'close' auction.id %}">Close</a>
+        {% endif %}
+        
+        
+        <br><br>
+        Comment:
+        <form action="{% url 'comment' auction.id %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="content" placeholder="Write something...">
+            <input type="submit">
+        </form>
     {% endif %}
-    
-
-    <br><br>
-    Comment:
-    <form action="{% url 'comment' auction.id %}" method="post">
-        {% csrf_token %}
-        <input type="text" name="content" placeholder="Write something...">
-        <input type="submit">
-    </form>
 
     <br><br>
     <ul>
