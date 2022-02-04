@@ -17,16 +17,21 @@
         {% else %}
             <a href="{% url 'watchlist_add' auction.id %}">➕Watchlist</a> <br> <br>
         {% endif %}
-    
-        Bid: (current: {{highest}})
-        <form action="{% url 'bid' auction.id %}" method="post">
-            {% csrf_token %}
-            <input type="text" name="value" placeholder="value">
-            <input type="submit">
-        </form>
-        <br>
 
+        Bid: (current: {{highest}}) <br>
+        {% if won %}
+            {{winner}} venceu este leilão!
+        {% else %}
+            <form action="{% url 'bid' auction.id %}" method="post">
+                {% csrf_token %}
+                <input type="text" name="value" placeholder="value">
+                <input type="submit">
+            </form>
+        {% endif %}
+        
+        
         {% if owns %}
+            <br>
             Closed? {{auction.closed}}
             <a href="{% url 'close' auction.id %}">Close</a>
         {% endif %}

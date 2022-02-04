@@ -105,6 +105,7 @@ def listings(request):
 def auction(request, auction_id):
     in_list = Watchlist.objects.filter(listing_id = auction_id, owner=request.user.id).exists
     comments = Comment.objects.filter(listing_id = auction_id)
+    
     start = Listing.objects.get(id=auction_id)
     highest = start.st_bid
 
@@ -117,18 +118,27 @@ def auction(request, auction_id):
         new = Bid.objects.get(listing_id=auction_id)
         highest = new.value
 
+    won = False
+    if start.closed: won = True
+    winner = User.objects.get(id=start.winner)
+    winner = winner.username
+
     return render(request, "auctions/auction.html", {
         "auction": Listing.objects.get(id=auction_id),
         "exists": in_list,
         "comments": comments,
         "highest": highest,
         "owns": owns,
-        "logged": logged
+        "logged": logged,
+        "won": won,
+        "winner": winner
     })
 
 def close(request, auction_id):
     auction = Listing.objects.get(id=auction_id)
     auction.closed = True
+    victory = Bid.objects.get(listing_id=auction_id)
+    auction.winner = victory.owner
     auction.save()
 
     return HttpResponseRedirect(reverse("index"))
@@ -194,8 +204,9 @@ def comment(request, auction_id):
 def bid(request, auction_id):
     if request.method == "POST":
         data = request.POST["value"]
-        old = Listing.objects.get(id=auction_id)
-        highest = old.st_bid
+        start = Listing.objects.get(id=auction_id)
+        highest = start.st_bid
+        old = None
         
 
         in_database = Bid.objects.filter(listing_id=auction_id).exists()
@@ -204,9 +215,10 @@ def bid(request, auction_id):
             old = Bid.objects.get(listing_id=auction_id)
             highest = old.value
 
-            if int(data) > highest :
-                new = Bid(listing_id=auction_id, value=data)
+        if int(data) > highest :
+            new = Bid(listing_id=auction_id, value=data, owner=request.user.id)
+            if old != None:
                 old.delete()
-                new.save()       
+            new.save()       
         
         return redirect('index')

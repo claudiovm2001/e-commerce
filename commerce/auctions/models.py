@@ -13,6 +13,7 @@ class Listing(models.Model):
     img = models.CharField(max_length=255, default=None)
     closed = models.BooleanField(default=False)
     owner = models.IntegerField(default=-1)
+    winner = models.IntegerField(default=-1)
 
     def __str__(self):
         return f"{self.id}, {self.title}, {self.owner}"
@@ -20,9 +21,10 @@ class Listing(models.Model):
 class Bid(models.Model):
     listing_id = models.IntegerField(default=-1)
     value = models.IntegerField(default=-1)
+    owner = models.IntegerField(default=-1)
 
     def __str__(self):
-        return f"{self.listing_id}, {self.value}"
+        return f"{self.owner}, {self.listing_id}, {self.value}"
 
 class Comment(models.Model):
     listing_id = models.IntegerField()
