@@ -3,7 +3,8 @@ from django.db import models
 
 
 class User(AbstractUser):
-    pass
+    def __str__(self):
+        return f"{self.username}, {self.id}"
 
 class Listing(models.Model):
     title = models.CharField(max_length=64)
@@ -31,9 +32,10 @@ class Comment(models.Model):
 
 class Watchlist(models.Model):
     listing_id = models.IntegerField()
+    owner = models.IntegerField(default=-1)
 
     def __str__(self):
-        return f"{self.listing_id}"
+        return f"{self.owner}, {self.listing_id}"
 
 class Categories(models.Model):
     title = models.CharField(max_length=64)

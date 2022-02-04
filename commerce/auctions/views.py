@@ -128,7 +128,8 @@ def close(request, auction_id):
     return HttpResponseRedirect(reverse("index"))
 
 def watchlist(request):
-    keys = Watchlist.objects.all().values_list('listing_id', flat=True)
+    keys = Watchlist.objects.filter(owner=request.user.id).values_list('listing_id', flat=True)
+    #keys = Watchlist.objects.all().values_list('listing_id', flat=True)
 
     watch = Listing.objects.filter(pk__in=keys)
 
