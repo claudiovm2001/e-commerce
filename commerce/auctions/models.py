@@ -15,7 +15,7 @@ class Listing(models.Model):
     owner = models.IntegerField(default=-1)
 
     def __str__(self):
-        return f"{self.id}, {self.title}"
+        return f"{self.id}, {self.title}, {self.owner}"
 
 class Bid(models.Model):
     listing_id = models.IntegerField(default=-1)

@@ -78,7 +78,8 @@ def create_listing(request):
                 title = form.cleaned_data["title"],
                 desc = request.POST["desc"],
                 st_bid = form.cleaned_data["st_bid"],
-                img = form.cleaned_data["img"])
+                img = form.cleaned_data["img"],
+                owner=request.user.id)
             l.save()
 
             select = request.POST['category']
