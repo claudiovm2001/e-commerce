@@ -3,7 +3,7 @@ An eBay-inspired(auctions) web system built using Django.
 
 ||
 
-Um sistema web inspirado no eBay(leilões).
+Um sistema web inspirado no eBay(leilões) construído em Django.
 
 
 ### How to run/Como executar:
