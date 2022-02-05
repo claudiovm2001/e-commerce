@@ -17,4 +17,3 @@ P.S.: Visit `localhost:8000/admin` to manage database
 A FAZER/TODO:
    - Refinar a interface(alinhamento, cores e ornamentos)
    - Unificar idioma(atualmente mescla português e inglês)
-   - Fortalecer relacionamentos do banco de dados (chave estrangeira, relações 'muitos para muitos')
