@@ -15,3 +15,6 @@ https://www.edx.org/
 - Install Django(+python);
 - Execute `python manage.py runserver` via terminal;
 - Visit `localhost:8000` via web browser.
+
+P.S.: Visit `localhost:8000/admin` to manage database
+   username 'admin', password 'password'
