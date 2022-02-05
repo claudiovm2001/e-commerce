@@ -69,6 +69,7 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
+#Criar leilão:
 def create_listing(request):
 
     if request.method == "POST":
@@ -83,7 +84,7 @@ def create_listing(request):
             l.save()
 
             select = request.POST['category']
-            if select != 0:
+            if select != 0: #'0' indica categoria nula
                 category = Categories(title = select, listing_id= l.id)
                 category.save()
         
@@ -95,10 +96,12 @@ def create_listing(request):
         "form": form, "categories": categories
     })
 
+#Função chamada ao acessar a página de um leilão:
 def auction(request, auction_id):
     in_list = Watchlist.objects.filter(listing_id = auction_id, owner=request.user.id).exists
     comments = Comment.objects.filter(listing_id = auction_id)
     
+    #Lance inicial
     start = Listing.objects.get(id=auction_id)
     highest = start.st_bid
 
@@ -107,12 +110,14 @@ def auction(request, auction_id):
 
     surpassed = Bid.objects.filter(listing_id = auction_id).exists()
 
+    #Se um usuário tiver feito um lance
     if surpassed:
         new = Bid.objects.get(listing_id=auction_id)
         highest = new.value
 
     won = False
     winner = None
+    #Se o leilão estiver fechado, deve informar o ganhador
     if start.closed: 
         won = True
         winner = User.objects.get(id=start.winner)
@@ -130,6 +135,7 @@ def auction(request, auction_id):
         "winner": winner
     })
 
+#Fechar um leilão o esconde da tela principal, além de definir o vencedor
 def close(request, auction_id):
     auction = Listing.objects.get(id=auction_id)
     auction.closed = True
@@ -139,6 +145,7 @@ def close(request, auction_id):
 
     return HttpResponseRedirect(reverse("index"))
 
+#Acessar lista de desejos:
 def watchlist(request):
     keys = Watchlist.objects.filter(owner=request.user.id).values_list('listing_id', flat=True)
 
@@ -163,6 +170,7 @@ def watchlist_remove(request, auction_id):
 
     return redirect('index')
 
+#Acessar a página de TODAS categorias
 def categories(request):
     names = Categories.objects.all().values_list('title', flat=True).distinct()
 
@@ -170,6 +178,7 @@ def categories(request):
         "names" : names
     })
 
+#Acessar uma sessão de produtos categorizados
 def category(request, name):
     keys = Categories.objects.all().filter(title = name).values_list('listing_id', flat=True)
     content = Listing.objects.filter(pk__in=keys)
@@ -186,6 +195,7 @@ def comment(request, auction_id):
 
         return redirect('index')
 
+#Fazer um lance:
 def bid(request, auction_id):
     if request.method == "POST":
         data = request.POST["value"]
@@ -200,6 +210,7 @@ def bid(request, auction_id):
             old = Bid.objects.get(listing_id=auction_id)
             highest = old.value
 
+        #O lance só é aceito se for maior que o inicial e for maior que o atual
         if int(data) > highest :
             new = Bid(listing_id=auction_id, value=data, owner=request.user.id)
             if old != None:
