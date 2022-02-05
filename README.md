@@ -19,8 +19,6 @@ https://www.edx.org/
 P.S.: Visit `localhost:8000/admin` to manage database
    username 'admin', password 'password'
 
-
-
 A FAZER/TODO:
    - Refinar a interface(alinhamento, cores e ornamentos)
    - Unificar idioma(atualmente mescla português e inglês)
