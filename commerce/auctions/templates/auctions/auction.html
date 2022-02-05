@@ -32,8 +32,7 @@
         
         {% if owns %}
             <br>
-            Closed? {{auction.closed}}
-            <a href="{% url 'close' auction.id %}">Close</a>
+            <a href="{% url 'close' auction.id %}">Close this auction</a>
         {% endif %}
         
         

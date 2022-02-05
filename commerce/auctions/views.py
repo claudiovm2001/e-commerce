@@ -95,13 +95,6 @@ def create_listing(request):
         "form": form, "categories": categories
     })
 
-'''
-def listings(request):
-    return render(request, "auctions/listings.html", {
-        "listings": Listing.objects.all()
-    })
-'''
-
 def auction(request, auction_id):
     in_list = Watchlist.objects.filter(listing_id = auction_id, owner=request.user.id).exists
     comments = Comment.objects.filter(listing_id = auction_id)
@@ -119,9 +112,12 @@ def auction(request, auction_id):
         highest = new.value
 
     won = False
-    if start.closed: won = True
-    winner = User.objects.get(id=start.winner)
-    winner = winner.username
+    winner = None
+    if start.closed: 
+        won = True
+        winner = User.objects.get(id=start.winner)
+        winner = winner.username
+    
 
     return render(request, "auctions/auction.html", {
         "auction": Listing.objects.get(id=auction_id),
@@ -145,7 +141,6 @@ def close(request, auction_id):
 
 def watchlist(request):
     keys = Watchlist.objects.filter(owner=request.user.id).values_list('listing_id', flat=True)
-    #keys = Watchlist.objects.all().values_list('listing_id', flat=True)
 
     watch = Listing.objects.filter(pk__in=keys)
 
@@ -176,16 +171,6 @@ def categories(request):
     })
 
 def category(request, name):
-    '''
-    data = Categories.objects.filter(title = name)
-    keys = data.objects.all().values_list('listing_id', flat=True)
-    content = Listings.objects.filter(pk__in=keys)
-
-    return render(request, "auctions/category.html", {
-        "content": content, "title": name
-    })
-    '''
-
     keys = Categories.objects.all().filter(title = name).values_list('listing_id', flat=True)
     content = Listing.objects.filter(pk__in=keys)
 
