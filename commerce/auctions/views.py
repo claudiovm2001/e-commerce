@@ -17,7 +17,7 @@ def index(request):
         "auctions": Listing.objects.filter(closed=False)
     })
 
-
+'''UNORIGINAL CODE'''
 def login_view(request):
     if request.method == "POST":
 
@@ -68,6 +68,7 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
+'''UNORIGINAL CODE'''
 
 #Criar leilão:
 def create_listing(request):
