@@ -1,9 +1,9 @@
 # e-commerce
-An eBay-inspired(auctions) web system built using Django.
+An eBay-inspired(auctions) web system built using Django. Made (almost) entirely from scratch.
 
 ||
 
-Um sistema web inspirado no eBay(leilões) construído em Django.
+Um sistema web inspirado no eBay(leilões) construído em Django. Feito (quase) do zero.
 
 
 ### How to run/Como executar:
